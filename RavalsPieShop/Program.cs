@@ -15,7 +15,10 @@ builder.Services.AddDbContext<RavalsPieShopDbContext>(options =>
 
 var app = builder.Build();
 
+app.UseHttpsRedirection();
 app.UseStaticFiles();     // Looks for incoming requests for static files, such as a jpeg or a CSS file, and it will look into wwwroot folder
+
+app.UseRouting(); // Add this line for routing to work
 
 if (app.Environment.IsDevelopment())
 {
