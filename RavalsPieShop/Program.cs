@@ -1,6 +1,17 @@
+using Microsoft.EntityFrameworkCore;
+using RavalsPieShop.Models.EntityFramework;
+using RavalsPieShop.Models.Interfaces;
+using RavalsPieShop.Models.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddScoped<IPieRepository, PieRepository>(); // Dependency Injection - we are telling the application to use the PieRepository class whenever it needs an IPieRepository
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+
 builder.Services.AddControllersWithViews();       // Application will know that it is an MVC application
+
+builder.Services.AddDbContext<RavalsPieShopDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("RavalsPieShopDbContext"))); // Add the connection string to the database
 
 var app = builder.Build();
 
